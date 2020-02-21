@@ -5,7 +5,7 @@ from yahoo_fin import options
 
 style.use("ggplot")
 
-chain = options.get_options_chain("SPY")
+chain = options.get_options_chain("^GSPC")
 
 data = pd.DataFrame(chain['calls'])
 data1 = pd.DataFrame(chain['puts'])
