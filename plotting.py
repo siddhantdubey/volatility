@@ -9,7 +9,18 @@ from yahoo_fin import options
 
 style.use("ggplot")
 
-data = pd.read_csv('calls.csv')
+data = pd.read_csv('puts.csv')
+
+for x in data['Maturity']:
+    x = int(x)
+
+for x in data['Strike']:
+    x  = int(x)
+volatility = []
+for x in data['Implied Volatility']:
+    x = float(x[:-1])
+    volatility.append(x)
+data['Implied Volatility'] = volatility
 
 # threedee = plt.figure().gca(projection='3d')
 # threedee.scatter(data['Maturity'], data['Strike'], data['Implied Volatility'])
