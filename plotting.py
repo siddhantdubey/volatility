@@ -11,6 +11,7 @@ style.use("ggplot")
 
 data = pd.read_csv('puts.csv')
 
+print(len(data))
 for x in data['Maturity']:
     x = int(x)
 
