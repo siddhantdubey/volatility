@@ -42,5 +42,3 @@ This uses Multi Layer Perceptron method, the following was done with a hidden la
 
 ![MLP Regression](https://github.com/siddhantdubey/volatility/blob/master/Graphics/FitImages/mlpregression.png?raw=true)
 
-
-
