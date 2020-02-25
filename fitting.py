@@ -1,41 +1,55 @@
 import sys
-from pykrige.ok import OrdinaryKriging
-from matplotlib import cm
-from mpl_toolkits.mplot3d import axes3d
-from scipy.interpolate import griddata as gd
+import os.path
 import pandas as pd
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
 import numpy as np
+from os import path
+from pykrige.ok import OrdinaryKriging
+from matplotlib import cm
+from mpl_toolkits.mplot3d import axes3d
+from scipy.interpolate import griddata as gd
 from mpl_toolkits.mplot3d import axes3d
 from scipy.interpolate import griddata as gd
 
+stock = input("Input Stock Ticker: ")
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 xs_list = []
 ys_list = []
 zs_list = []
 
-n = 100
-datess = ['03/06/2020','03/13/2020','03/20/2020','03/27/2020','04/03/2020','04/17/2020','05/15/2020','06/19/2020','07/17/2020','08/21/2020','09/18/2020','10/16/2020','01/15/2021','03/19/2021','06/18/2021','09/17/2021','01/21/2022','03/18/2022','06/17/2022']
-f_datess = []
-for i in range(len(datess)):
-    d = datess[i]
-    temp = d[6:] + '-' + d[:2] + '-' + d[3:5]
-    f_datess.append(temp)
-# For each set of style and range settings, plot n random points in the box
-# defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
-for j in range(len(f_datess)):
-    for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
-        data = pd.read_csv('Data/calls' + f_datess[j] + '.csv')
-        data = data[data['Implied Volatility'] != 0]
-        xs = data['Strike'].tolist()
-        ys = data['Maturity'].tolist()
-        zs = data['Implied Volatility'].tolist()
-        xs_list = xs_list + xs
-        ys_list = ys_list + ys
-        zs_list = zs_list + zs
+if(path.exists('Graphics/FitImages/' + stock)):
+    pass
+else:
+    os.mkdir('Graphics/FitImages/' + stock)
 
+n = 100
+# datess = ['03/06/2020','03/13/2020','03/20/2020','03/27/2020','04/03/2020','04/17/2020','05/15/2020','06/19/2020','07/17/2020','08/21/2020','09/18/2020','10/16/2020','01/15/2021','03/19/2021','06/18/2021','09/17/2021','01/21/2022','03/18/2022','06/17/2022']
+# f_datess = []
+# for i in range(len(datess)):
+#     d = datess[i]
+#     temp = d[6:] + '-' + d[:2] + '-' + d[3:5]
+#     f_datess.append(temp)
+# # For each set of style and range settings, plot n random points in the box
+# # defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
+# for j in range(len(f_datess)):
+#     for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
+#         data = pd.read_csv('Data/calls' + f_datess[j] + '.csv')
+#         data = data[data['Implied Volatility'] != 0]
+#         xs = data['Strike'].tolist()
+#         ys = data['Maturity'].tolist()
+        # zs = data['Implied Volatility'].tolist()
+#         xs_list = xs_list + xs
+#         ys_list = ys_list + ys
+#         zs_list = zs_list + zs
+
+
+data = pd.read_csv('Data/' + stock + 'calls.csv')
+
+xs_list = data['Strike'].tolist()
+ys_list = data['Maturity'].tolist()
+zs_list = data['Implied Volatility'].tolist()
 epic = []
 
 for x in range(len(xs_list)):
@@ -194,7 +208,7 @@ def plot(data, gridx, gridy, gridz, method='rotate', title='nearest', both=False
         ax.scatter(data[:, 0], data[:, 1], data[:, 2], c='red')
 
         animation.FuncAnimation(fig, update, np.arange(360 * 5), interval=1)
-        plt.savefig('Graphics/FitImages/rotate_{}.gif'.format(title))
+        plt.savefig('Graphics/FitImages/' + stock + '/rotate_{}.gif'.format(title))
 
     elif method== 'snaps':
         fig = plt.figure(figsize=(10, 10))
@@ -215,7 +229,7 @@ def plot(data, gridx, gridy, gridz, method='rotate', title='nearest', both=False
                 ax.scatter(data[:, 0], data[:, 1], data[:, 2], c='red')
                 ax.view_init(azim=angles[i])
 
-        plt.savefig('Graphics/FitImages/snaps_{}.png'.format(title))
+        plt.savefig('Graphics/FitImages/' + stock + '/snaps_{}.png'.format(title))
 
     elif method == 'contour':
         fig = plt.figure()
@@ -228,7 +242,7 @@ def plot(data, gridx, gridy, gridz, method='rotate', title='nearest', both=False
         ax.contourf(gridx, gridy, gridz, zdir='x', offset=0, cmap=cm.coolwarm)
         ax.contourf(gridx, gridy, gridz, zdir='y', offset=0, cmap=cm.coolwarm)
         ax.view_init(azim=45)
-        plt.savefig('Graphics/FitImages/contour_{}.png'.format(title))
+        plt.savefig('Graphics/FitImages'  + stock + '/contour_{}.png'.format(title))
 
 
 if __name__ == '__main__':
