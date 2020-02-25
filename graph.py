@@ -36,6 +36,9 @@ for j in range(len(f_datess)):
         zs_list = zs_list + zs
 
 ax.scatter(xs_list, ys_list, zs_list)
+print(len(xs_list))
+print(len(ys_list))
+print(len(zs_list))
 
 ax.set_xlabel('Stike')
 ax.set_ylabel('Maturity')

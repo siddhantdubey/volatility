@@ -36,19 +36,21 @@ for j in range(len(f_datess)):
         ys_list = ys_list + ys
         zs_list = zs_list + zs
 
-real_data = []
+epic = []
+
 for x in range(len(xs_list)):
     listy=[]
     listy.append(xs_list[x])
     listy.append(ys_list[x])
     listy.append(zs_list[x])
-    real_data.append(listy)
+    epic.append(listy)
 
-real_data = np.array(real_data)
+epic = np.array(epic)
+real_data = epic[:3000]
 print(real_data)
 interpolationmethod = 'cubic'
 p = 2
-extrapolation_interval = 30
+extrapolation_interval = 10
 
 
 def main():
@@ -138,7 +140,7 @@ def kriging(data, extrapolation_spots):
     # the enable_plotting kwarg controls the display of the semivariogram.
     OK = OrdinaryKriging(data[:, 0], data[:, 1], data[:, 2], variogram_model='spherical',
                                  verbose=False, nlags=100)
-
+    
     # Creates the kriged grid and the variance grid. Allows for kriging on a rectangular
     # grid of points, on a masked rectangular grid of points, or with arbitrary points.
     # (See OrdinaryKriging.__doc__ for more information.)
