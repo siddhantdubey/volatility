@@ -38,8 +38,8 @@ for j in range(len(f_datess)):
         zs_list = zs_list + zs
 
 temp = np.column_stack((xs_list, ys_list))
-regr = MLPRegressor(hidden_layer_sizes=400, activation='relu', max_iter=450) #MLP Performs significantly worse than RandomForest
-# reg1 = RandomForestRegressor(max_depth=200, random_state=0)
+# regr = MLPRegressor(hidden_layer_sizes=400, activation='relu', max_iter=450) #MLP Performs significantly worse than RandomForest
+regr = RandomForestRegressor()
 # reg2 = GradientBoostingRegressor()
 # regr = VotingRegressor(estimators=[('gb', reg2), ('rf', reg1)])
 x_train, x_test, y_train, y_test = train_test_split(temp, zs_list, test_size = 0.01)
@@ -88,5 +88,5 @@ ax1.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 # Add a color bar which maps values to colors.
 fig1.colorbar(surf1, shrink=0.5, aspect=5)
 
-plt.savefig('Graphics/FitImages/mlpregression.png')
+plt.savefig('Graphics/FitImages/forestregression.png')
 plt.show()
