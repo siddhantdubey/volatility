@@ -8,19 +8,23 @@ We have so far attempted Random Forest Regression, Gradient Boosted Regression, 
 
 ### Output
 
-![Random Forest Regression](C:\Users\siddh\Documents\CLASS-X\Finance\ProjectReal\BigData\Graphics\FitImages\forestregression.png)
+![Random Forest Regression](https://github.com/siddhantdubey/volatility/blob/master/Graphics/FitImages/forestregression.png?raw=true)
+
+
 
 ## Gradient Boosted Regression
 
 ### Output
 
-![Random Forest Regression](C:\Users\siddh\Documents\CLASS-X\Finance\ProjectReal\BigData\Graphics\FitImages\gbdregression.png)
+![Random Forest Regression](https://github.com/siddhantdubey/volatility/blob/master/Graphics/FitImages/gbdregression.png?raw=true)
+
+
 
 ## Voter Regression
 
 ### Output
 
-![Voter Regression](C:\Users\siddh\Documents\CLASS-X\Finance\ProjectReal\BigData\Graphics\FitImages\votingregressor.png)
+![Voter Regression](https://github.com/siddhantdubey/volatility/blob/master/Graphics/FitImages/votingregression.png?raw=true)
 
 
 
@@ -30,13 +34,13 @@ The following output is fairly bad, this is most likely due to poor implementati
 
 ### Output
 
-![](C:\Users\siddh\Documents\CLASS-X\Finance\ProjectReal\BigData\Graphics\FitImages\snaps__bot_kriging.png)
+![Krigging Analysis](https://github.com/siddhantdubey/volatility/blob/master/Graphics/FitImages/snaps__top_kriging.png?raw=true)
 
 ## MLP Regression
 
 This uses Multi Layer Perceptron method, the following was done with a hidden layer size of 400, trained over 450 epochs.
 
-![MLP Regression](C:\Users\siddh\Documents\CLASS-X\Finance\ProjectReal\BigData\Graphics\FitImages\mlpregression.png)
+![MLP Regression](https://github.com/siddhantdubey/volatility/blob/master/Graphics/FitImages/mlpregression.png?raw=true)
 
 
 
