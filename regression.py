@@ -28,7 +28,7 @@ for i in range(len(datess)):
 # defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
 for j in range(len(f_datess)):
     for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
-        data = pd.read_csv('calls' + f_datess[j] + '.csv')
+        data = pd.read_csv('Data/calls' + f_datess[j] + '.csv')
         data = data[data['Implied Volatility'] != 0]
         xs = data['Strike'].tolist()
         ys = data['Maturity'].tolist()
@@ -88,27 +88,5 @@ ax1.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 # Add a color bar which maps values to colors.
 fig1.colorbar(surf1, shrink=0.5, aspect=5)
 
-plt.savefig('images/gbdregression.png')
-
-# fig = plt.figure()
-# ax = fig.gca(projection='3d')
-
-# # Make data.
-# X = np.arange(0, 2, 0.1)
-# Y = np.arange(0, 2, 0.1)
-# x, y = np.meshgrid(X, Y)
-# Z = .3*(.1*x**3+.2*y**2+.1*x*y +.5*x+.5*y)-.5
-
-# # Plot the surface.
-# surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
-#                        linewidth=0, antialiased=False)
-
-# # Customize the z axis.
-# ax.set_zlim(-1.01, 1.01)
-# ax.zaxis.set_major_locator(LinearLocator(10))
-# ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
-
-# # Add a color bar which maps values to colors.
-# fig.colorbar(surf, shrink=0.5, aspect=5)
-
-# plt.show()
+plt.savefig('Graphics/FitImages/gbdregression.png')
+plt.show()

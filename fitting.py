@@ -27,7 +27,7 @@ for i in range(len(datess)):
 # defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
 for j in range(len(f_datess)):
     for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
-        data = pd.read_csv('calls' + f_datess[j] + '.csv')
+        data = pd.read_csv('Data/calls' + f_datess[j] + '.csv')
         data = data[data['Implied Volatility'] != 0]
         xs = data['Strike'].tolist()
         ys = data['Maturity'].tolist()
@@ -194,7 +194,7 @@ def plot(data, gridx, gridy, gridz, method='rotate', title='nearest', both=False
         ax.scatter(data[:, 0], data[:, 1], data[:, 2], c='red')
 
         animation.FuncAnimation(fig, update, np.arange(360 * 5), interval=1)
-        plt.savefig('images/rotate_{}.gif'.format(title))
+        plt.savefig('Graphics/FitImages/rotate_{}.gif'.format(title))
 
     elif method== 'snaps':
         fig = plt.figure(figsize=(10, 10))
@@ -215,7 +215,7 @@ def plot(data, gridx, gridy, gridz, method='rotate', title='nearest', both=False
                 ax.scatter(data[:, 0], data[:, 1], data[:, 2], c='red')
                 ax.view_init(azim=angles[i])
 
-        plt.savefig('images/snaps_{}.png'.format(title))
+        plt.savefig('Graphics/FitImages/snaps_{}.png'.format(title))
 
     elif method == 'contour':
         fig = plt.figure()
@@ -228,7 +228,7 @@ def plot(data, gridx, gridy, gridz, method='rotate', title='nearest', both=False
         ax.contourf(gridx, gridy, gridz, zdir='x', offset=0, cmap=cm.coolwarm)
         ax.contourf(gridx, gridy, gridz, zdir='y', offset=0, cmap=cm.coolwarm)
         ax.view_init(azim=45)
-        plt.savefig('images/contour_{}.png'.format(title))
+        plt.savefig('Graphics/FitImages/contour_{}.png'.format(title))
 
 
 if __name__ == '__main__':

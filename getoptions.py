@@ -42,8 +42,8 @@ for i in range(len(datess)):
 
     data['Implied Volatility'] = volatility
     # data = data[data['Maturity'] != 0]
-    data.to_csv('calls' + d[6:] + '-' + d[:2] + '-' + d[3:5] + '.csv')
-    data1.to_csv('puts' + d[6:] + '-' + d[:2] + '-' + d[3:5] + '.csv')
+    data.to_csv('Data/calls' + d[6:] + '-' + d[:2] + '-' + d[3:5] + '.csv')
+    data1.to_csv('Data/puts' + d[6:] + '-' + d[:2] + '-' + d[3:5] + '.csv')
 
 
 
