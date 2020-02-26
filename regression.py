@@ -28,7 +28,6 @@ zs_list = data['Implied Volatility'].tolist()
 temp = np.column_stack((xs_list, ys_list))
 regr = MLPRegressor(hidden_layer_sizes=(50,50), activation='relu', max_iter=1000) #MLP Performs significantly worse than RandomForest
 regrf = RandomForestRegressor(n_estimators = 500, random_state=0)
-
 # reg2 = GradientBoostingRegressor()
 reg1 = VotingRegressor(estimators=[('ml', regr), ('rf', regrf)], weights=[.5,.5])
 x_train, x_test, y_train, y_test = train_test_split(temp, zs_list, test_size = 0.01)
@@ -77,5 +76,5 @@ ax1.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 # Add a color bar which maps values to colors.
 fig1.colorbar(surf1, shrink=0.5, aspect=5)
 
-plt.savefig('Graphics/FitImages/forestregression.png')
+plt.savefig('Graphics/FitImages/randomforest.png')
 plt.show()
