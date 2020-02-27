@@ -20,16 +20,16 @@ n = 100
 # For each set of style and range settings, plot n random points in the box
 # defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
 
-data = pd.read_csv('Data/SPYcalls.csv')
+data = pd.read_csv('Data/TSLAcalls.csv')
 xs_list = data['Strike'].tolist()
 ys_list = data['Maturity'].tolist()
 zs_list = data['Implied Volatility'].tolist()
 
 temp = np.column_stack((xs_list, ys_list))
 regr = MLPRegressor(hidden_layer_sizes=(50,50), activation='relu', max_iter=1000) #MLP Performs significantly worse than RandomForest
-regrf = RandomForestRegressor(n_estimators = 500, random_state=0)
-# reg2 = GradientBoostingRegressor()
-reg1 = VotingRegressor(estimators=[('ml', regr), ('rf', regrf)], weights=[.5,.5])
+reg2 = RandomForestRegressor(n_estimators = 500, random_state=0)
+reg3 = GradientBoostingRegressor()
+reg1 = VotingRegressor(estimators=[('ml', regr), ('rf', reg2), ('gbd', reg3)],  weights=[.2,.4,.4])
 x_train, x_test, y_train, y_test = train_test_split(temp, zs_list, test_size = 0.01)
 
 reg1.fit(x_train, y_train)
@@ -72,9 +72,12 @@ surf1 = ax1.plot_surface(X, Y, pred, cmap=cm.coolwarm,
 ax1.set_zlim(0, 300)
 ax1.zaxis.set_major_locator(LinearLocator(10))
 ax1.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
-
+plt.xlabel('Strike')
+plt.ylabel('Maturity')
+ax1.set_zlabel('Implied Volatility')
+plt.title('Implied Volatility Surface')
 # Add a color bar which maps values to colors.
 fig1.colorbar(surf1, shrink=0.5, aspect=5)
 
-plt.savefig('Graphics/FitImages/randomforest.png')
+plt.savefig('Graphics/FitImages/TSLA/votingregression.png')
 plt.show()
