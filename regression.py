@@ -12,45 +12,27 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
-stock = input("Input Stock Ticker: ")
 xs_list = []
 ys_list = []
 zs_list = []
 
 n = 100
+# For each set of style and range settings, plot n random points in the box
+# defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
 
-# datess = ['03/06/2020','03/13/2020','03/20/2020','03/27/2020','04/03/2020','04/17/2020','05/15/2020','06/19/2020','07/17/2020','08/21/2020','09/18/2020','10/16/2020','01/15/2021','03/19/2021','06/18/2021','09/17/2021','01/21/2022','03/18/2022','06/17/2022']
-# f_datess = []
-# for i in range(len(datess)):
-#     d = datess[i]
-#     temp = d[6:] + '-' + d[:2] + '-' + d[3:5]
-#     f_datess.append(temp)
-# # For each set of style and range settings, plot n random points in the box
-# # defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
-# for j in range(len(f_datess)):
-#     for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
-#         data = pd.read_csv('Data/calls' + f_datess[j] + '.csv')
-#         data = data[data['Implied Volatility'] != 0]
-#         xs = data['Strike'].tolist()
-#         ys = data['Maturity'].tolist()
-#         zs = data['Implied Volatility'].tolist()
-#         xs_list = xs_list + xs
-#         ys_list = ys_list + ys
-#         zs_list = zs_list + zs
-
-data = pd.read_csv('Data/' + stock + "calls.csv")
+data = pd.read_csv('Data/SPYcalls.csv')
 xs_list = data['Strike'].tolist()
 ys_list = data['Maturity'].tolist()
 zs_list = data['Implied Volatility'].tolist()
 
 temp = np.column_stack((xs_list, ys_list))
-# regr = MLPRegressor(hidden_layer_sizes=400, activation='relu', max_iter=450) #MLP Performs significantly worse than RandomForest
-regr = RandomForestRegressor()
+regr = MLPRegressor(hidden_layer_sizes=(50,50), activation='relu', max_iter=1000) #MLP Performs significantly worse than RandomForest
+regrf = RandomForestRegressor(n_estimators = 500, random_state=0)
 # reg2 = GradientBoostingRegressor()
-# regr = VotingRegressor(estimators=[('gb', reg2), ('rf', reg1)])
+reg1 = VotingRegressor(estimators=[('ml', regr), ('rf', regrf)], weights=[.5,.5])
 x_train, x_test, y_train, y_test = train_test_split(temp, zs_list, test_size = 0.01)
 
-regr.fit(x_train, y_train)
+reg1.fit(x_train, y_train)
 
 ymin = 10
 ymax = 800
@@ -71,7 +53,7 @@ xtest = np.stack((x, y), axis=-1)
 
 
 
-predict = regr.predict(xtest)
+predict = reg1.predict(xtest)
 
 # pred = np.ndarray.squeeze(predict, axis=1)
 pred = np.reshape(predict, (int((ymax-ymin)/yinc),int((xmax-xmin)/xinc)))
@@ -85,14 +67,14 @@ ax1 = fig1.gca(projection='3d')
 # Plot the surface.
 surf1 = ax1.plot_surface(X, Y, pred, cmap=cm.coolwarm,
                        linewidth=0, antialiased=False)
-print(pred)
+
 # Customize the z axis.
-ax1.set_zlim(0, 250)
+ax1.set_zlim(0, 300)
 ax1.zaxis.set_major_locator(LinearLocator(10))
 ax1.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 
 # Add a color bar which maps values to colors.
 fig1.colorbar(surf1, shrink=0.5, aspect=5)
 
-plt.savefig('Graphics/FitImages/' + stock + '/forestregression.png')
+plt.savefig('Graphics/FitImages/randomforest.png')
 plt.show()
